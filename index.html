@@ -14,22 +14,19 @@
 
         <script type="module">
             class MyWebComp extends HTMLElement {
+
                 connectedCallback() {
-                    // this.insertAdjacentHTML('beforeEnd', `
-                    //     <section>
-                    //         <div>Hello</div>
-                    //         <span>world</span>
-                    //     </section>
-                    // `);
                     const tplEl = document.querySelector('#myWebCompTemplate');
-                    const html = document.importNode(tplEl.content, true);
-                    this.appendChild(html);
-                    // const greetName = this.getAttribute('greet-name');
-                    this.querySelector('#helloLabel').textContent += ` ${this.getAttribute('greet-name')}`;
+                    const html = document.importNode(tplEl.content, true);        
+
+                    this.attachShadow({mode: 'open'});
+                    const context = this.shadowRoot;
+                    context.appendChild(html);
+                    context.querySelector('#helloLabel').textContent += ` ${this.getAttribute('greet-name')}`;
+
                 }
                 showMessage(event) {
                     alert(`Message from ${this.getAttribute("greet-name")}`);
-                    console.log(event);
                 }
             }
             customElements.define('my-webcomp', MyWebComp);
