@@ -3,12 +3,14 @@
         
         <template id="myWebCompTemplate">
             <section>
-                <div>Hello</div>
+                <div id="helloLabel">Hello</div>
                 <span>world</span>
             </section>
         </template>    
 
-        <my-webcomp></my-webcomp>
+        <my-webcomp id="myWebComp1" greet-name="John" onclick="this.showMessage(event)"></my-webcomp>
+
+        <my-webcomp id="myWebComp2" greet-name="Josh" onclick="this.showMessage(event)"></my-webcomp>
 
         <script type="module">
             class MyWebComp extends HTMLElement {
@@ -22,6 +24,12 @@
                     const tplEl = document.querySelector('#myWebCompTemplate');
                     const html = document.importNode(tplEl.content, true);
                     this.appendChild(html);
+                    // const greetName = this.getAttribute('greet-name');
+                    this.querySelector('#helloLabel').textContent += ` ${this.getAttribute('greet-name')}`;
+                }
+                showMessage(event) {
+                    alert(`Message from ${this.getAttribute("greet-name")}`);
+                    console.log(event);
                 }
             }
             customElements.define('my-webcomp', MyWebComp);
