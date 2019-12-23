@@ -1,0 +1,30 @@
+<html lang="en"> 
+    <body>
+        
+        <template id="myWebCompTemplate">
+            <section>
+                <div>Hello</div>
+                <span>world</span>
+            </section>
+        </template>    
+
+        <my-webcomp></my-webcomp>
+
+        <script type="module">
+            class MyWebComp extends HTMLElement {
+                connectedCallback() {
+                    // this.insertAdjacentHTML('beforeEnd', `
+                    //     <section>
+                    //         <div>Hello</div>
+                    //         <span>world</span>
+                    //     </section>
+                    // `);
+                    const tplEl = document.querySelector('#myWebCompTemplate');
+                    const html = document.importNode(tplEl.content, true);
+                    this.appendChild(html);
+                }
+            }
+            customElements.define('my-webcomp', MyWebComp);
+        </script>
+    </body>
+</html>
