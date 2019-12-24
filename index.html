@@ -8,28 +8,16 @@
             </section>
         </template>    
 
-        <my-webcomp id="myWebComp1" greet-name="John" onclick="this.showMessage(event)"></my-webcomp>
+        <my-webcomp id="myWebComp" greet-name="John" onclick="this.showMessage(event)"></my-webcomp>
 
         <my-webcomp id="myWebComp2" greet-name="Josh" onclick="this.showMessage(event)"></my-webcomp>
 
+
         <script type="module">
-            class MyWebComp extends HTMLElement {
-
-                connectedCallback() {
-                    const tplEl = document.querySelector('#myWebCompTemplate');
-                    const html = document.importNode(tplEl.content, true);        
-
-                    this.attachShadow({mode: 'open'});
-                    const context = this.shadowRoot;
-                    context.appendChild(html);
-                    context.querySelector('#helloLabel').textContent += ` ${this.getAttribute('greet-name')}`;
-
-                }
-                showMessage(event) {
-                    alert(`Message from ${this.getAttribute("greet-name")}`);
-                }
-            }
+            import {MyWebComp} from "./my-webcomp.js";
             customElements.define('my-webcomp', MyWebComp);
+            myWebComp.shadowRoot.getElementById('helloLabel');
         </script>
+
     </body>
 </html>
